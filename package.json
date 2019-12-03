@@ -1,10 +1,17 @@
 {
   "name": "aoc2019",
   "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run1": "node day1.js",
+    "run2": "node day2.js",
+    "run3": "node day3.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "svg-intersections": "^0.4.0"
-  },
-  "scripts": {
-    "day2": "node day2.js"
   }
 }
