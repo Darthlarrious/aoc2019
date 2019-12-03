@@ -68,7 +68,7 @@ let getClosestCollision = (wire1, wire2) => {
 
     distances.sort((wireA, wireB) => {return wireA.distance - wireB.distance});
 
-    return distances[0];
+    return {distance: distances[0], collision: collisions.points[distances[0].index]};
 };
 
 let distance = getClosestCollision(wire1, wire2);
