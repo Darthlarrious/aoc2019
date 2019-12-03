@@ -2,7 +2,7 @@
   "name": "aoc2019",
   "version": "1.0.0",
   "dependencies": {
-    
+    "svg-intersections": "^0.4.0"
   },
   "scripts": {
     "day2": "node day2.js"
