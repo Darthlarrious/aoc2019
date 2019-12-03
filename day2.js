@@ -5,6 +5,8 @@ const inputs = fs.readFileSync('inputs/day2inputs.txt')
 
 let data = inputs.map(item => parseInt(item));
 
+// recurse through data, modifying it as we parse.
+// given an array of integers and a starting point, parse the command and execute the appropriate action
 let step = (data, start) => {
   if(data[start] != 1 && data[start] != 2){
     return data;
@@ -18,6 +20,7 @@ let step = (data, start) => {
     data[destination] = data[item_one] * data[item_two];
   }
 
+  // when done, return the entire data set, the first entry will be the answer
   return step(data, start + 4);
 }
 
