@@ -40,3 +40,30 @@ let generateNums = (start, end) => {
 };
 console.log("Day 4 Part 1:")
 console.log(generateNums(start, end).filter(c => hasDouble(c)).length);
+
+let hasOneDouble = (num) => {
+  let result = false;
+
+  let digitFrequency = {};
+
+  let digits = (''+num).split('');
+  for(let i = 0; i < digits.length - 1; i++){
+    if(digits[i] === digits[i+1]){
+        if(digitFrequency[digits[i]] === undefined){
+            digitFrequency[digits[i]] = 2;
+        } else {
+            digitFrequency[digits[i]]++;
+        }
+    }
+  }
+  for(let digit in digitFrequency){
+      if(digitFrequency[digit] === 2){
+          result = true;
+      }
+  }
+
+  return result;
+};
+
+console.log("Day 4 Part 2:");
+console.log(generateNums(start, end).filter(c => hasOneDouble(c)).length);
