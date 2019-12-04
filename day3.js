@@ -88,58 +88,66 @@ let getShortestPath = (wire, point) => {
 
   for(let step in data){
       let line = data[step].split(',').map(item => parseInt(item));
-      if(line[0] === lastx){
+
+      if(line[0] === lastx && lastx === point.x){
+        // desired point is on the plane, check if it's between the points
         if(line[1] > lasty){
-          // going U, if line[1] > point.y > lasty then point is on this line
-          if(line[1] > point.y > lasty){
+          if(lasty <= point.y && point.y <= line[1] ){
             return currPathLen + Math.abs(point.y - lasty);
           }
-          currPathLen += Math.abs(lasty - line[1]);
-        } else {
-          // going D, if lasty > point.y > line[1] then point is on this line
-          if(lasty < 0 || line[1] < 0){
-            if(lasty < point.y < line[1]){
-              return currPathLen + Math.abs(point.y - line[1]);
-            }
-          } else {
-            if(lasty > point.y > line[1]){
-              return currPathLen + Math.abs(point.y - line[1]);
-            }
-          }
-
           currPathLen += Math.abs(line[1] - lasty);
+        } else {
+          if(lasty >= point.y && point.y >= line[1]){
+            return currPathLen + Math.abs(lasty - point.y);
+          }
+          currPathLen += Math.abs(lasty - line[1]);
         }
-      } else {
+
+      } else if(line[1] === lasty && lasty === point.y){
+        // desired point is on the plane, check if it's between the points
+
         if(line[0] > lastx){
-          // going R, if line[0] > point.x > lastx then point is on this line
-          if(line[0] > point.x > lastx){
+          if(lastx <= point.x && point.x <= line[0]){
             return currPathLen + Math.abs(point.x - lastx);
           }
-          currPathLen += Math.abs( lastx - line[0]);
-        } else {
-          // going L, if lastx > point.x > line[0] then point is on this line
-          if(lastx < 0 || line[0] < 0){
-            if(lastx < point.x < line[0]){
-              return currPathLen + Math.abs(point.x - line[0]);
-            }
-          } else {
-            if(lastx > point.x > line[0]){
-              return currPathLen + Math.abs(point.x - line[0]);
-            }
-          }
           currPathLen += Math.abs(line[0] - lastx);
-        } // if we haven't found the path, add x distance to currPathLen
-
+        } else {
+          if(lastx >= point.x && point.x >= line[0]){
+            return currPathLen + Math.abs( lastx - point.x);
+          }
+          currPathLen += Math.abs(lastx - line[0]);
+        }
+      } else {
+        if(lastx === line[0]){
+          currPathLen += Math.abs(line[1] - lasty);
+        } else {
+          currPathLen += Math.abs(line[0] - lastx);
+        }
       }
 
+
+      lastx = line[0];
+      lasty = line[1];
+
   }
+
+  return currPathLen;
 }
 
-console.log(generateSVG(wire1));
-console.log(generateSVG(wire2));
+//let tw1 = "R8,U5,L5,D3".split(",");
+//let tw2 = "U7,R6,D4,L4".split(",");
+//let w1 = generateSVG(tw1);
+//let w2 = generateSVG(tw2);
 
-let w1P2P = getShortestPath(generateSVG(wire1), distance.collision);
-let w2P2P = getShortestPath(generateSVG(wire2), distance.collision);
+let w1 = generateSVG(wire1);
+let w2 = generateSVG(wire2);
 
-console.log("Day 3 Part 2:");
-console.log(w1P2P + w2P2P);
+let collisions = getCollisions(wire1, wire2);
+let results = collisions.points.map(point => {
+  let len1 = getShortestPath(w1, point);
+  let len2 = getShortestPath(w2, point);
+
+  return len1 + len2;
+});
+
+console.log(results.sort((a,b)=> {return a-b})[0]);
