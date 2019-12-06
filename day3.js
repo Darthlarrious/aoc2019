@@ -134,11 +134,6 @@ let getShortestPath = (wire, point) => {
   return currPathLen;
 }
 
-//let tw1 = "R8,U5,L5,D3".split(",");
-//let tw2 = "U7,R6,D4,L4".split(",");
-//let w1 = generateSVG(tw1);
-//let w2 = generateSVG(tw2);
-
 let w1 = generateSVG(wire1);
 let w2 = generateSVG(wire2);
 
