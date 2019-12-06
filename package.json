@@ -6,7 +6,9 @@
   "scripts": {
     "run1": "node day1.js",
     "run2": "node day2.js",
-    "run3": "node day3.js"
+    "run3": "node day3.js",
+    "run4": "node day4.js",
+    "run5": "node day5.js"
   },
   "keywords": [],
   "author": "",
