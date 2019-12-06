@@ -50,3 +50,35 @@ let memoizeOrbit = (link) => {
 console.log("Day 6 Part 1:");
 console.log(totalOrbits(paths));
 
+let findClosestCommonNode = (paths, startA, startB) => {
+  let pathToCOG1 = [];
+  let pathToCOG2 = [];
+  let currOrbit = paths[startA];
+  while (currOrbit.direct !== "COM"){
+      pathToCOG1.push(currOrbit.direct);
+      currOrbit = paths[currOrbit.direct];
+  }
+  currOrbit = paths[startB];
+  while (currOrbit.direct !== "COM"){
+    pathToCOG2.push(currOrbit.direct);
+    currOrbit = paths[currOrbit.direct];
+  }
+
+  let commonPath = pathToCOG1.filter(item => pathToCOG2.indexOf(item) !== -1);
+
+  return commonPath[0];
+}
+
+
+// leverages the cached distances used in part 1
+let distanceBetweenNodes = (paths, startA, startB, memory) => {
+  let commonNode = findClosestCommonNode(paths, startA, startB);
+
+  let pathToCommonA = memory[startA] - memory[commonNode];
+  let pathToCommonB = memory[startB] - memory[commonNode];
+
+  return pathToCommonA + pathToCommonB - 2;
+}
+
+console.log("Day 2 Part 2");
+console.log(distanceBetweenNodes(paths, "YOU", "SAN", memory))
