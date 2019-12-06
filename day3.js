@@ -71,6 +71,8 @@ let getClosestCollision = (wire1, wire2) => {
     return {distance: distances[0], collision: collisions.points[distances[0].index]};
 };
 
+console.log(generateSVG(wire2));
+
 let distance = getClosestCollision(wire1, wire2);
 console.log("Day 3 Part 1:");
 console.log(distance);
