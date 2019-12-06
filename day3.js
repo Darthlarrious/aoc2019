@@ -4,7 +4,7 @@ var intersect = svgIntersections.intersect;
 var shape = svgIntersections.shape;
 
 
-let input = fs.readFileSync('inputs/day3inputs.txt').toString().split("\n");
+let input = fs.readFileSync('inputs/day3-varun.txt').toString().split("\n");
 
 let wire1 = input[0].split(",");
 let wire2 = input[1].split(",");
