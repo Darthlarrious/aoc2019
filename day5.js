@@ -3,27 +3,6 @@ let fs = require('fs');
 let rawInput = fs.readFileSync('inputs/day5inputs.txt').toString().split(",");
 let input = rawInput.map(item => parseInt(item));
 
-/*let step = (data, start) => {
-    if(data[start] != 1 && data[start] != 2){
-        return data;
-    }
-    if(data[start] == 1){
-        let register1 = data[start+1];
-        let register2 = data[start+2];
-        let resultRegister = data[start+3];
-
-        data[resultRegister] = data[register1] + data[register2];
-    } else {
-        let register1 = data[start+1];
-        let register2 = data[start+2];
-        let resultRegister = data[start+3];
-
-        data[resultRegister] = data[register1] * data[register2];
-    }
-
-    return step(data, start + 4);
-};*/
-
 let step = (data, start, inputs) => {
     let command = parseCommand(data[start]);
     switch(command.command){
