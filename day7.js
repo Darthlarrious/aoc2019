@@ -3,7 +3,7 @@ let fs = require('fs');
 let rawInput = fs.readFileSync('inputs/day7inputs.txt').toString().split(",");
 let input = rawInput.map(item => parseInt(item));
 
-let step = (data, start, inputs, outputFunc) => {
+let step = (data, start, inputs, outputFunc, saveFunc, ampID) => {
   let command = parseCommand(data[start]);
   switch(command.command){
     case 1:
@@ -109,11 +109,14 @@ let step = (data, start, inputs, outputFunc) => {
       break;
     case 99:
     default:
+      if(saveFunc){
+        saveFunc(data, ampID);
+      }
       return data;
       break;
   }
 
-  step(data, start + command.offset, inputs, outputFunc);
+  step(data, start + command.offset, inputs, outputFunc, saveFunc, ampID);
 };
 
 let parseCommand = (input) => {
@@ -160,14 +163,13 @@ let parseCommand = (input) => {
       break;
   }
 
-
   return result;
 };
 
-let chainAmps = (program, inputs) => {
-  let currOutput = 0;
+let chainAmps = (program, inputs, initialOutput, saveFunction) => {
+  let currOutput = initialOutput || 0;
   inputs.forEach(input => {
-    step(program, 0,[input, currOutput], v => {currOutput = v});
+    step(program, 0,[input, currOutput], v => {currOutput = v}, saveFunction);
   });
 
   return currOutput;
@@ -193,12 +195,16 @@ const permutator = (inputArr) => {
   return result;
 }
 
-console.log("Day 7 Part 1:");
-let permutations = permutator([4,3,2,1,0]);
-let totals = [];
-permutations.forEach(permutation => {
-  totals.push({"permutation":permutation, "value": chainAmps(input.map(c=>c), permutation)});
-})
-console.log(totals.sort((a,b)=>b.value - a.value)[0].value);
+let getOptimal = (program, inputs, feedback) => {
+  let permutations = permutator(inputs);
+  let totals = [];
+  permutations.forEach(permutation => {
+    totals.push({"permutation":permutation, "value": chainAmps(program.map(c=>c), permutation, feedback)});
+  })
+  return totals.sort((a,b)=>b.value - a.value)[0];
+}
 
-console.log("Day 7 Part 2:");
+console.log("Day 7 Part 1:");
+
+
+console.log(getOptimal(input, [4,3,2,1,0]).value);
