@@ -10,7 +10,8 @@
     "run4": "node day4.js",
     "run5": "node day5.js",
     "run6": "node day6.js",
-    "run7": "node day7.js"
+    "run7": "node day7.js",
+    "run8": "node day8.js"
   },
   "keywords": [],
   "author": "",
